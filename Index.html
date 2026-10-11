@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acesso Restrito</title>
+<link rel="icon" href="https://i.supaimg.com/755ee084-1fb0-4f60-9563-6c7e28e59a26/d5cd3421-23b6-4dbe-9f4d-63ba1d01b818.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#000;color:#EDEDED;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased;overflow-x:hidden;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;background-position:-32px -32px}
+body::before{content:'';position:fixed;top:-300px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(239,68,68,.14),transparent 60%);filter:blur(40px);pointer-events:none}
+.card{width:100%;max-width:400px;position:relative;z-index:1;background:rgba(10,10,11,.6);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px 32px 28px;box-shadow:0 0 0 1px rgba(0,0,0,.5), 0 24px 60px rgba(0,0,0,.6);animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.logo{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#EF4444,#B91C1C);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:22px;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.1), 0 8px 24px rgba(239,68,68,.32), inset 0 1px 0 rgba(255,255,255,.25)}
+.title{font-size:19px;font-weight:800;color:#fff;text-align:center;margin-bottom:6px;letter-spacing:-.2px}
+.sub{font-size:13px;color:#A1A1AA;text-align:center;line-height:1.5;margin-bottom:28px}
+.label{display:block;font-size:12px;font-weight:600;color:#A1A1AA;margin-bottom:8px}
+.input{width:100%;height:50px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:0 16px;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;letter-spacing:2.5px;color:#fff;text-align:center;text-transform:uppercase;outline:none;transition:all .2s}
+.input::placeholder{color:#52525B;letter-spacing:2px;font-size:13px;font-weight:500}
+.input:focus{border-color:rgba(239,68,68,.5);background:rgba(255,255,255,.04);box-shadow:0 0 0 3px rgba(239,68,68,.12)}
+.input.error{border-color:#EF4444;box-shadow:0 0 0 3px rgba(239,68,68,.14)}
+.input.valid{border-color:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.1)}
+.shake{animation:shake .4s}
+.error{display:flex;align-items:flex-start;gap:8px;font-size:12px;font-weight:500;color:#FCA5A5;max-height:0;overflow:hidden;opacity:0;transition:all .25s;line-height:1.5;margin-top:0}
+.error.show{max-height:60px;opacity:1;margin-top:10px}
+.error i{font-size:12px;flex-shrink:0;margin-top:2px}
+.btn{position:relative;width:100%;height:48px;margin-top:24px;border-radius:11px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;overflow:hidden;background:#EF4444;color:#fff;cursor:pointer;border:none;box-shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(239,68,68,.25);transition:all .18s;font-family:inherit}
+.btn:hover:not(:disabled){background:#DC2626;box-shadow:0 6px 20px rgba(239,68,68,.38);transform:translateY(-1px)}
+.btn:disabled{cursor:wait;opacity:.7}
+.btn .spin{animation:spin .8s linear infinite}
+.footer{text-align:center;font-size:11px;color:#52525B;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;gap:6px}
+.footer i{color:#22C55E;font-size:9px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo"><i class="fas fa-key"></i></div>
+  <div class="title">Eternal Key System</div>
+  <div class="sub">Insira sua chave de acesso para desbloquear a plataforma</div>
+  <label class="label" for="gateInput">Chave de acesso</label>
+  <input type="text" class="input" id="gateInput" placeholder="ETNX-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off" spellcheck="false">
+  <div class="error" id="gateError"><i class="fas fa-circle-exclamation"></i><span id="gateErrorText">Chave inválida</span></div>
+  <button class="btn" id="btnValidate"><i class="fas fa-arrow-right-to-bracket"></i> Desbloquear acesso</button>
+  <div class="footer"><i class="fas fa-lock"></i> Conexão segura</div>
+</div>
+<script>
+/* ============================================================
+   CONFIG — TROCA ESSAS URLS QUANDO MUDAR DE LUGAR
+   ============================================================ */
+var WORKER_URL = 'https://eternal-keys.sadz.workers.dev';
+var GATE_URL   = 'https://devakz.github.io/ETNXBUX/';
+var TOKEN_KEY  = 'etnx_token';
+
+var gateInput     = document.getElementById('gateInput');
+var gateError     = document.getElementById('gateError');
+var gateErrorText = document.getElementById('gateErrorText');
+var btnValidate   = document.getElementById('btnValidate');
+
+async function computeHWID(){
+  var parts = [];
+  try { var c=document.createElement('canvas'); c.width=220; c.height=60; var x=c.getContext('2d'); x.textBaseline='top'; x.font='16px Arial'; x.fillStyle='#f60'; x.fillRect(125,1,62,20); x.fillStyle='#069'; x.fillText('EternalKey',2,15); x.fillStyle='rgba(102,204,0,0.7)'; x.fillText('EternalKey',4,17); parts.push('c:'+c.toDataURL()); } catch(e){ parts.push('c:none'); }
+  try { var gl=document.createElement('canvas').getContext('webgl'); if(gl){ var ext=gl.getExtension('WEBGL_debug_renderer_info'); if(ext){ parts.push('v:'+gl.getParameter(ext.UNMASKED_VENDOR_WEBGL)); parts.push('r:'+gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)); } parts.push('p:'+gl.getParameter(gl.VERSION)); } } catch(e){ parts.push('v:none'); }
+  parts.push('hc:'+(navigator.hardwareConcurrency||0));
+  parts.push('pf:'+(navigator.platform||''));
+  parts.push('sc:'+screen.width+'x'+screen.height+'x'+screen.colorDepth);
+  parts.push('tz:'+(Intl.DateTimeFormat().resolvedOptions().timeZone||''));
+  parts.push('lg:'+(navigator.language||''));
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(parts.join('|')));
+  var hex = [].slice.call(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('').toUpperCase();
+  return (hex.slice(0,32).match(/.{4}/g)||[]).join('-');
+}
+
+gateInput.addEventListener('input', function(e){
+  var v = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (v.indexOf('ETNX') === 0) v = v.slice(4);
+  v = v.slice(0, 12);
+  var groups = v.match(/.{1,4}/g);
+  var suffix = groups ? groups.join('-') : '';
+  e.target.value = 'ETNX' + (suffix ? '-' + suffix : '');
+  gateInput.classList.remove('error');
+  gateError.classList.remove('show');
+});
+gateInput.addEventListener('keydown', function(e){
+  if (e.key === 'Enter'){ e.preventDefault(); btnValidate.click(); }
+});
+
+function showError(msg){
+  gateErrorText.textContent = msg;
+  gateError.classList.add('show');
+  gateInput.classList.add('error','shake');
+  setTimeout(function(){ gateInput.classList.remove('shake'); }, 420);
+}
+
+btnValidate.addEventListener('click', async function(){
+  var raw = gateInput.value.trim().toUpperCase();
+  if (raw.length !== 19){ showError('Preencha a chave completa'); return; }
+  if (!/^ETNX-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(raw)){ showError('Formato inválido.'); return; }
+  btnValidate.disabled = true;
+  btnValidate.innerHTML = '<i class="fas fa-circle-notch spin"></i> Verificando...';
+  gateError.classList.remove('show');
+  gateInput.classList.remove('error');
+  try {
+    var hwid = await computeHWID();
+    var res  = await fetch(WORKER_URL + '/validate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-HWID': hwid },
+      body: JSON.stringify({ key: raw })
+    });
+    var data = await res.json();
+    if (!data || data.valid !== true){
+      btnValidate.disabled = false;
+      btnValidate.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Desbloquear acesso';
+      showError((data && data.reason) || 'Chave inválida.');
+      return;
+    }
+    gateInput.classList.add('valid');
+    localStorage.setItem(TOKEN_KEY, data.token);
+    setTimeout(function(){
+      window.location.href = WORKER_URL + '/app?t=' + encodeURIComponent(data.token);
+    }, 300);
+  } catch (err){
+    btnValidate.disabled = false;
+    btnValidate.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Desbloquear acesso';
+    showError('Erro de conexão. Tente novamente.');
+  }
+});
+
+/* AUTO-LOGIN robusto */
+(async function autoLogin(){
+  var saved = null;
+  try { saved = localStorage.getItem(TOKEN_KEY); } catch(e){}
+  if (!saved || typeof saved !== 'string' || saved.length < 16) return;
+  try {
+    var res = await fetch(WORKER_URL + '/api/session?t=' + encodeURIComponent(saved));
+    if (!res.ok){ localStorage.removeItem(TOKEN_KEY); return; }
+    var data = await res.json();
+    if (data && data.valid === true && data.key && data.key.key){
+      window.location.href = WORKER_URL + '/app?t=' + encodeURIComponent(saved);
+    } else {
+      localStorage.removeItem(TOKEN_KEY);
+    }
+  } catch(e){
+    localStorage.removeItem(TOKEN_KEY);
+  }
+})();
+
+/* Rede de segurança: se cair em /logout, volta pro gate */
+(function(){
+  var p = window.location.pathname;
+  if (p === '/logout' || p.indexOf('/logout') === 0){
+    try { localStorage.removeItem(TOKEN_KEY); } catch(e){}
+    window.location.replace(GATE_URL);
+  }
+})();
+
+window.addEventListener('load', function(){
+  setTimeout(function(){ try { gateInput.focus(); } catch(e){} }, 300);
+});
+</script>
+</body>
+</html>
