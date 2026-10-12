@@ -7,48 +7,71 @@
 <link rel="icon" href="https://i.supaimg.com/755ee084-1fb0-4f60-9563-6c7e28e59a26/d5cd3421-23b6-4dbe-9f4d-63ba1d01b818.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#000;color:#EDEDED;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased;overflow-x:hidden;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;background-position:-32px -32px}
-body::before{content:'';position:fixed;top:-300px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(239,68,68,.14),transparent 60%);filter:blur(40px);pointer-events:none}
-.card{width:100%;max-width:400px;position:relative;z-index:1;background:rgba(10,10,11,.6);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px 32px 28px;box-shadow:0 0 0 1px rgba(0,0,0,.5), 0 24px 60px rgba(0,0,0,.6);animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+:root{--bg:#000;--fg:#fff;--mut:rgba(255,255,255,.55);--dim:rgba(255,255,255,.32);--line:rgba(255,255,255,.14)}
+html,body{height:100%}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;-webkit-font-smoothing:antialiased}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.grid{position:fixed;inset:-64px;z-index:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;opacity:.35;animation:drift 18s linear infinite;-webkit-mask-image:radial-gradient(ellipse at center,#000 0%,transparent 72%);mask-image:radial-gradient(ellipse at center,#000 0%,transparent 72%)}
+.sweep{position:fixed;left:0;right:0;height:140px;z-index:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(255,255,255,.05),transparent);animation:sweep 7s ease-in-out infinite}
+@keyframes drift{to{transform:translate(64px,64px)}}
+@keyframes sweep{0%{top:-160px}100%{top:100%}}
+@keyframes rise{from{opacity:0;transform:translateY(16px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-.logo{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#EF4444,#B91C1C);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:22px;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.1), 0 8px 24px rgba(239,68,68,.32), inset 0 1px 0 rgba(255,255,255,.25)}
-.title{font-size:19px;font-weight:800;color:#fff;text-align:center;margin-bottom:6px;letter-spacing:-.2px}
-.sub{font-size:13px;color:#A1A1AA;text-align:center;line-height:1.5;margin-bottom:28px}
-.label{display:block;font-size:12px;font-weight:600;color:#A1A1AA;margin-bottom:8px}
-.input{width:100%;height:50px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:0 16px;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;letter-spacing:2.5px;color:#fff;text-align:center;text-transform:uppercase;outline:none;transition:all .2s}
-.input::placeholder{color:#52525B;letter-spacing:2px;font-size:13px;font-weight:500}
-.input:focus{border-color:rgba(239,68,68,.5);background:rgba(255,255,255,.04);box-shadow:0 0 0 3px rgba(239,68,68,.12)}
-.input.error{border-color:#EF4444;box-shadow:0 0 0 3px rgba(239,68,68,.14)}
-.input.valid{border-color:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.1)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.card{position:relative;z-index:1;width:100%;max-width:410px;padding:38px 32px 26px;background:rgba(0,0,0,.62);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:22px;box-shadow:0 0 0 1px rgba(0,0,0,.6),0 30px 80px rgba(0,0,0,.8);animation:rise .8s cubic-bezier(.22,1,.36,1) both}
+.logo{width:58px;height:58px;margin:0 auto 22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;color:#000;background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.06),0 0 40px rgba(255,255,255,.22)}
+.title{font-size:22px;font-weight:700;text-align:center;letter-spacing:-.4px;margin-bottom:8px}
+.sub{font-size:14px;color:var(--mut);text-align:center;line-height:1.55;margin-bottom:28px}
+.label{display:block;font-size:13px;font-weight:500;color:var(--mut);margin-bottom:9px}
+.field{position:relative}
+.input{width:100%;height:54px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:0 44px 0 16px;font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;letter-spacing:2px;color:#fff;text-align:center;text-transform:uppercase;outline:none;transition:border-color .2s,background .2s,box-shadow .2s}
+.input::placeholder{color:var(--dim);font-weight:500;letter-spacing:2px}
+.input:focus{border-color:#fff;background:rgba(255,255,255,.07);box-shadow:0 0 0 4px rgba(255,255,255,.1)}
+.input.bad{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.input.ok{border-color:#fff;background:#fff;color:#000}
 .shake{animation:shake .4s}
-.error{display:flex;align-items:flex-start;gap:8px;font-size:12px;font-weight:500;color:#FCA5A5;max-height:0;overflow:hidden;opacity:0;transition:all .25s;line-height:1.5;margin-top:0}
-.error.show{max-height:60px;opacity:1;margin-top:10px}
-.error i{font-size:12px;flex-shrink:0;margin-top:2px}
-.btn{position:relative;width:100%;height:48px;margin-top:24px;border-radius:11px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;overflow:hidden;background:#EF4444;color:#fff;cursor:pointer;border:none;box-shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(239,68,68,.25);transition:all .18s;font-family:inherit}
-.btn:hover:not(:disabled){background:#DC2626;box-shadow:0 6px 20px rgba(239,68,68,.38);transform:translateY(-1px)}
-.btn:disabled{cursor:wait;opacity:.7}
+.paste{position:absolute;right:6px;top:6px;width:42px;height:42px;border:none;border-radius:8px;background:transparent;color:var(--mut);cursor:pointer;font-size:14px;transition:color .2s,background .2s}
+.paste:hover{color:#fff;background:rgba(255,255,255,.08)}
+.paste:focus-visible,.btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.msg{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#fff;max-height:0;overflow:hidden;opacity:0;line-height:1.5;transition:max-height .25s,opacity .25s,margin .25s}
+.msg.show{max-height:60px;opacity:1;margin-top:11px}
+.msg i{margin-top:3px;font-size:12px;flex-shrink:0}
+.btn{width:100%;height:50px;margin-top:22px;border:none;border-radius:12px;background:#fff;color:#000;font-family:inherit;font-size:15px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;transition:transform .18s,box-shadow .18s,opacity .18s}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 30px rgba(255,255,255,.28)}
+.btn:active:not(:disabled){transform:scale(.99)}
+.btn:disabled{cursor:wait;opacity:.65}
 .btn .spin{animation:spin .8s linear infinite}
-.footer{text-align:center;font-size:11px;color:#52525B;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;gap:6px}
-.footer i{color:#22C55E;font-size:9px}
+.footer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:var(--dim)}
+.footer .dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.grid,.sweep,.footer .dot{animation:none}.card{animation:none}}
 </style>
 </head>
 <body>
-<div class="card">
+<canvas id="bg"></canvas>
+<div class="grid"></div>
+<div class="sweep"></div>
+
+<main class="card">
   <div class="logo"><i class="fas fa-key"></i></div>
-  <div class="title">Eternal Key System</div>
-  <div class="sub">Insira sua chave de acesso para desbloquear a plataforma</div>
+  <h1 class="title">Eternal Key System</h1>
+  <p class="sub">Digite sua chave de acesso para entrar na plataforma.</p>
+
   <label class="label" for="gateInput">Chave de acesso</label>
-  <input type="text" class="input" id="gateInput" placeholder="ETNX-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off" spellcheck="false">
-  <div class="error" id="gateError"><i class="fas fa-circle-exclamation"></i><span id="gateErrorText">Chave inválida</span></div>
-  <button class="btn" id="btnValidate"><i class="fas fa-arrow-right-to-bracket"></i> Desbloquear acesso</button>
-  <div class="footer"><i class="fas fa-lock"></i> Conexão segura</div>
-</div>
+  <div class="field">
+    <input type="text" class="input" id="gateInput" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <button type="button" class="paste" id="btnPaste" aria-label="Colar chave" title="Colar chave"><i class="fas fa-paste"></i></button>
+  </div>
+  <div class="msg" id="gateError" role="alert"><i class="fas fa-circle-exclamation"></i><span id="gateErrorText">Chave inválida</span></div>
+
+  <button class="btn" id="btnValidate"><i class="fas fa-lock-open"></i> Desbloquear acesso</button>
+  <div class="footer"><span class="dot"></span> Conexão segura</div>
+</main>
+
 <script>
 var WORKER_URL = 'https://eternal-keys.sadz.workers.dev';
 var GATE_URL   = 'https://dvsadz.github.io/etnxBux/';
@@ -58,6 +81,8 @@ var gateInput     = document.getElementById('gateInput');
 var gateError     = document.getElementById('gateError');
 var gateErrorText = document.getElementById('gateErrorText');
 var btnValidate   = document.getElementById('btnValidate');
+var btnPaste      = document.getElementById('btnPaste');
+var BTN_IDLE = '<i class="fas fa-lock-open"></i> Desbloquear acesso';
 
 async function computeHWID(){
   var parts = [];
@@ -73,35 +98,45 @@ async function computeHWID(){
   return (hex.slice(0,32).match(/.{4}/g)||[]).join('-');
 }
 
+/* Formata a chave em grupos de 4, sem prefixo fixo */
+function formatKey(raw){
+  var v = String(raw).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 16);
+  var g = v.match(/.{1,4}/g);
+  return g ? g.join('-') : '';
+}
+
 gateInput.addEventListener('input', function(e){
-  var v = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-  if (v.indexOf('ETNX') === 0) v = v.slice(4);
-  v = v.slice(0, 12);
-  var groups = v.match(/.{1,4}/g);
-  var suffix = groups ? groups.join('-') : '';
-  e.target.value = 'ETNX' + (suffix ? '-' + suffix : '');
-  gateInput.classList.remove('error');
+  e.target.value = formatKey(e.target.value);
+  gateInput.classList.remove('bad');
   gateError.classList.remove('show');
 });
 gateInput.addEventListener('keydown', function(e){
   if (e.key === 'Enter'){ e.preventDefault(); btnValidate.click(); }
 });
 
+btnPaste.addEventListener('click', async function(){
+  try {
+    var t = await navigator.clipboard.readText();
+    gateInput.value = formatKey(t);
+    gateInput.dispatchEvent(new Event('input'));
+  } catch(e){ gateInput.focus(); }
+});
+
 function showError(msg){
   gateErrorText.textContent = msg;
   gateError.classList.add('show');
-  gateInput.classList.add('error','shake');
+  gateInput.classList.add('bad','shake');
   setTimeout(function(){ gateInput.classList.remove('shake'); }, 420);
 }
 
 btnValidate.addEventListener('click', async function(){
   var raw = gateInput.value.trim().toUpperCase();
-  if (raw.length !== 19){ showError('Preencha a chave completa'); return; }
-  if (!/^ETNX-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(raw)){ showError('Formato inválido.'); return; }
+  if (raw.length !== 19){ showError('Preencha a chave completa.'); return; }
+  if (!/^ETNX-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(raw)){ showError('Formato inválido. A chave começa com ETNX.'); return; }
   btnValidate.disabled = true;
   btnValidate.innerHTML = '<i class="fas fa-circle-notch spin"></i> Verificando...';
   gateError.classList.remove('show');
-  gateInput.classList.remove('error');
+  gateInput.classList.remove('bad');
   try {
     var hwid = await computeHWID();
     var res  = await fetch(WORKER_URL + '/validate', {
@@ -112,18 +147,18 @@ btnValidate.addEventListener('click', async function(){
     var data = await res.json();
     if (!data || data.valid !== true){
       btnValidate.disabled = false;
-      btnValidate.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Desbloquear acesso';
+      btnValidate.innerHTML = BTN_IDLE;
       showError((data && data.reason) || 'Chave inválida.');
       return;
     }
-    gateInput.classList.add('valid');
-    localStorage.setItem(TOKEN_KEY, data.token);
+    gateInput.classList.add('ok');
+    try { localStorage.setItem(TOKEN_KEY, data.token); } catch(e){}
     setTimeout(function(){
       window.location.href = WORKER_URL + '/app?t=' + encodeURIComponent(data.token);
-    }, 300);
+    }, 350);
   } catch (err){
     btnValidate.disabled = false;
-    btnValidate.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Desbloquear acesso';
+    btnValidate.innerHTML = BTN_IDLE;
     showError('Erro de conexão. Tente novamente.');
   }
 });
@@ -143,7 +178,7 @@ btnValidate.addEventListener('click', async function(){
       localStorage.removeItem(TOKEN_KEY);
     }
   } catch(e){
-    localStorage.removeItem(TOKEN_KEY);
+    try { localStorage.removeItem(TOKEN_KEY); } catch(_){}
   }
 })();
 
@@ -157,8 +192,64 @@ btnValidate.addEventListener('click', async function(){
 })();
 
 window.addEventListener('load', function(){
-  setTimeout(function(){ try { gateInput.focus(); } catch(e){} }, 300);
+  setTimeout(function(){ try { gateInput.focus(); } catch(e){} }, 400);
 });
+
+/* Fundo animado: partículas ligadas por linhas, reagem ao cursor/toque */
+(function(){
+  var cv = document.getElementById('bg'), ctx = cv.getContext('2d');
+  var W, H, dpr, pts = [], mouse = {x:-999,y:-999};
+  var still = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var LINK = 130;
+
+  function init(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = cv.width = innerWidth*dpr; H = cv.height = innerHeight*dpr;
+    var n = Math.min(90, Math.floor(innerWidth*innerHeight/14000));
+    pts = [];
+    for (var i=0;i<n;i++) pts.push({
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.35*dpr, vy:(Math.random()-.5)*.35*dpr,
+      r:(Math.random()*1.4+.6)*dpr
+    });
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    var L = LINK*dpr;
+    for (var i=0;i<pts.length;i++){
+      var p = pts[i];
+      if (!still){
+        p.x += p.vx; p.y += p.vy;
+        if (p.x<0||p.x>W) p.vx*=-1;
+        if (p.y<0||p.y>H) p.vy*=-1;
+        var dx = p.x-mouse.x, dy = p.y-mouse.y, d = Math.sqrt(dx*dx+dy*dy);
+        if (d < 110*dpr && d>0){ p.x += dx/d*1.2; p.y += dy/d*1.2; }
+      }
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.2832); ctx.fillStyle='rgba(255,255,255,.75)'; ctx.fill();
+      for (var j=i+1;j<pts.length;j++){
+        var q = pts[j], ax = p.x-q.x, ay = p.y-q.y, dd = Math.sqrt(ax*ax+ay*ay);
+        if (dd < L){
+          ctx.strokeStyle = 'rgba(255,255,255,'+(0.22*(1-dd/L)).toFixed(3)+')';
+          ctx.lineWidth = dpr*.8;
+          ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke();
+        }
+      }
+      var mx = p.x-mouse.x, my = p.y-mouse.y, md = Math.sqrt(mx*mx+my*my);
+      if (md < 160*dpr){
+        ctx.strokeStyle = 'rgba(255,255,255,'+(0.5*(1-md/(160*dpr))).toFixed(3)+')';
+        ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke();
+      }
+    }
+    if (!still && !document.hidden) requestAnimationFrame(frame);
+  }
+  function move(x,y){ mouse.x = x*dpr; mouse.y = y*dpr; }
+  addEventListener('mousemove', function(e){ move(e.clientX,e.clientY); });
+  addEventListener('touchmove', function(e){ var t=e.touches[0]; if(t) move(t.clientX,t.clientY); }, {passive:true});
+  addEventListener('touchend', function(){ mouse.x = mouse.y = -999; });
+  addEventListener('resize', init);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden && !still) requestAnimationFrame(frame); });
+  init(); frame();
+})();
 </script>
 </body>
 </html>
